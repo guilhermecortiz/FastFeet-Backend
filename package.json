@@ -1,0 +1,9 @@
+{
+  "name": "FastFeet-Backend",
+  "version": "1.0.0",
+  "description": "Desafio Final GoStack - Rocketseat",
+  "main": "index.js",
+  "repository": "https://github.com/guilhermecortiz/FastFeet-Backend.git",
+  "author": "guilhermecortiz <guilhermecortiz@gmail.com>",
+  "license": "MIT"
+}
