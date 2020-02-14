@@ -18,7 +18,7 @@ module.exports = {
       //   onDelete: 'SET NULL',
       //   allowNull: true,
       // },
-      type_street: {
+      street: {
         type: Sequelize.STRING,
         allowNull: false,
       },
