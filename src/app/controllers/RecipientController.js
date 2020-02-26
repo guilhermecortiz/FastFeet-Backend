@@ -5,19 +5,14 @@ import Recipient from '../models/Recipient';
 class RecipientController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      street: Yup.string().required(),
-      number: Yup.number()
-        .integer()
-        .max(10),
+      name: Yup.string(),
+      street: Yup.string(),
+      number: Yup.number().integer(),
+      // .max(10),
       complement: Yup.string(),
-      state: Yup.string()
-        .max(2)
-        .required(),
-      city: Yup.string().required(),
-      zip_code: Yup.string()
-        .max(9)
-        .required(),
+      state: Yup.string().max(2),
+      city: Yup.string(),
+      zip_code: Yup.string().max(9),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -30,7 +25,7 @@ class RecipientController {
         city: req.body.city,
         state: req.body.state,
         street: req.body.street,
-        number: { [Op.or]: [req.body.number, ''] }, // (number = req.body.number) OR (number = '')
+        number: { [Op.or]: [req.body.number, 0] }, // (number = req.body.number) OR (number = '')
         name: req.body.name,
         complement: { [Op.or]: [req.body.complement, ''] }, // (complement = req.body.complement) OR (complement = '')
       },
@@ -46,45 +41,47 @@ class RecipientController {
 
   // async update(req, res) {
   //   const schema = Yup.object().shape({
+  //     id: Yup.number()
+  //       .integer()
+  //       .required(),
   //     name: Yup.string(),
-  //     email: Yup.string().email(),
-  //     oldPassword: Yup.string().min(6),
-  //     password: Yup.string()
-  //       .min(6)
-  //       .when('oldPassword', (oldPassword, field) =>
-  //         oldPassword ? field.required() : field
-  //       ),
-  //     confirmPassword: Yup.string().when('password', (password, field) =>
-  //       password ? field.required().oneOf([Yup.ref('password')]) : field
-  //     ),
+  //     street: Yup.string(),
+  //     number: Yup.number().integer(),
+  //     complement: Yup.string(),
+  //     state: Yup.string().max(2),
+  //     city: Yup.string(),
   //   });
-
   //   if (!(await schema.isValid(req.body))) {
   //     return res.status(400).json({ error: 'Validation fails' });
   //   }
 
-  //   const { email, oldPassword } = req.body;
+  //   const recipient = await Recipient.findByPk(req.body.id);
 
-  //   const user = await Recipient.findByPk(req.userId);
+  //   if (!recipient) {
+  //     return res.status(400).json({ error: 'Recipient is not exists.' });
+  //   }
 
-  //   if (email && email !== user.email) {
-  //     const userExists = await Recipient.findOne({ where: { email } });
+  //   const { name, street, number, complement, state, city } = req.body;
 
-  //     if (userExists) {
-  //       return res.status(400).json({ error: 'User already exists.' });
+  //   if (!name && !street && !number && !complement && !state && !city) {
+  //     return res
+  //       .status(401)
+  //       .json({ error: 'No information has been changed.' });
+  //   }
+
+  //   if (name && name !== recipient.name) {
+  //     const recipientExists = await Recipient.findOne({ where: { name } });
+
+  //     if (recipientExists) {
+  //       return res
+  //         .status(400)
+  //         .json({ error: `Recipient with name ${name} already existe.` });
   //     }
   //   }
 
-  //   if (oldPassword && !(await user.checkPassword(oldPassword))) {
-  //     return res.status(401).json({ error: 'Password does not match.' });
-  //   }
+  //   const recipientUpdate = await recipient.update(req.body);
 
-  //   const { id, name } = await user.update(req.body);
-  //   return res.json({
-  //     id,
-  //     name,
-  //     email,
-  //   });
+  //   return res.json(recipientUpdate);
   // }
 }
 
