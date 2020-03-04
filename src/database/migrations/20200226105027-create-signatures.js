@@ -1,32 +1,17 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('couriers', {
+    return queryInterface.createTable('signatures', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      recipient_id
-deliveryman_id
-signature_id
-product
-canceled_at
-start_date
-end_date
-created_at
-updated_at: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      avatar_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'files', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-        allowNull: true,
-      },
-      email: {
+      path: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
@@ -43,6 +28,6 @@ updated_at: {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('couriers');
+    return queryInterface.dropTable('signatures');
   },
 };
