@@ -1,5 +1,4 @@
 import Sequelize, { Model } from 'sequelize';
-import { isBefore, subHours } from 'date-fns';
 
 class Order extends Model {
   static init(sequelize) {
@@ -22,7 +21,7 @@ class Order extends Model {
       foreignKey: 'recipient_id',
       as: 'recipient',
     });
-    this.belongsTo(models.Courier, {
+    this.belongsTo(models.Deliveryman, {
       foreignKey: 'deliveryman_id',
       as: 'deliveryman',
     });
